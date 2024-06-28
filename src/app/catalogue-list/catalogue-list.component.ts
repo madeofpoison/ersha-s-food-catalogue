@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { CatalogueItem } from '../catalogue-item';
 import { NgFor, NgIf } from '@angular/common';
 import { IngredientItemComponent } from '../ingredient-item/ingredient-item.component';
@@ -14,7 +14,11 @@ import { IngredientItemComponent } from '../ingredient-item/ingredient-item.comp
   `,
   styleUrl: './catalogue-list.component.css'
 })
-export class CatalogueListComponent {
+export class CatalogueListComponent implements OnChanges{
  @Input() currentList!: CatalogueItem[];
- currentPage: number = 0;
+ currentPage: number = 0; 
+
+ ngOnChanges(changes: SimpleChanges): void {
+     this.currentPage = 0;
+ }
 }

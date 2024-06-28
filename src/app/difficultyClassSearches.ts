@@ -34,6 +34,37 @@ export class difficultyClassSearches extends effectSearchClass {
         }
     }
 
+    searchBoostBase(newView: CatalogueItem[], minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): CatalogueItem[] | null {
+        let baseArraysResult: CatalogueItem[] = [];
+        let boostArraysResult: CatalogueItem[] = [];
+        let mergedArray: CatalogueItem[] = [];
+        if(minBaseDC || maxBaseDC) {
+            baseArraysResult = newView.filter((item) => this.searchBaseDCRange(item, minBaseDC, maxBaseDC));
+        }
+        if(minBoostedDC || maxBoostedDC){
+            boostArraysResult = newView.filter((item) => this.searchBoostDCRange(item, minBoostedDC, maxBoostedDC));
+        }
+        if(baseArraysResult.length > 0 && boostArraysResult.length > 0) {
+            mergedArray = baseArraysResult.concat(boostArraysResult);
+            mergedArray.forEach((item: CatalogueItem, index: number) => {
+                if(mergedArray[index+2]){
+                    if(item.name === mergedArray[index+2].name) mergedArray.splice((index+2), 1);
+                }
+                })
+            
+            console.log(mergedArray);
+            return mergedArray ?? null;
+        } else if(baseArraysResult.length > 0 && boostArraysResult.length === 0) {
+            return baseArraysResult;
+        }
+        else if(baseArraysResult.length === 0 && boostArraysResult.length > 0) {
+            return boostArraysResult;
+        }
+        else {
+            return null;
+        }
+    }
+
     constructor () {
         super();
         this.testData = [];

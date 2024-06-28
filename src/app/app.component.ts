@@ -4,11 +4,12 @@ import { CatalogueListComponent } from './catalogue-list/catalogue-list.componen
 import { CatalogueSearchComponent } from './catalogue-search/catalogue-search.component';
 import { CatalogueDataService } from './catalogue-data.service';
 import { CatalogueItem } from './catalogue-item';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CatalogueListComponent,CatalogueSearchComponent],
+  imports: [RouterOutlet, CatalogueListComponent,CatalogueSearchComponent, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

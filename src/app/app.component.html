@@ -4,7 +4,8 @@
     <app-catalogue-search />
   </section>
   <section>
-    <app-catalogue-list [currentList]="catalogueData.currentView"/>
+    <app-catalogue-list *ngIf="catalogueData.currentView.length > 0; else elseBlock" [currentList]="catalogueData.currentView"/>
+    <ng-template #elseBlock><h1>NOTHING SATISFIES YOUR SEARCH MORTAL</h1> </ng-template>
   </section>
 </main>
 

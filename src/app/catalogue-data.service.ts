@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { testData } from './testStuff';
 import { CatalogueItem } from './catalogue-item';
 import { difficultyClassSearches } from './difficultyClassSearches';
+import { MinLengthValidator } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -26,32 +27,30 @@ export class CatalogueDataService extends difficultyClassSearches {
     
   reconstructCurrentView(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
     let newView: CatalogueItem[] = [];
+
+    //Checks whether there are any tag filters present; If there are none, it assigns all items in the catalogue to newView and moves on to filtering by
+    //DC ranges.
     if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0) {
       newView = this.testData;
-    }
-    testData.forEach((item:CatalogueItem) => {
-      this.selectedEffects.forEach((effect) => {
-        if(item.effectTags.includes(effect) && !this.isItemInArray(item, newView)) newView.push(item);
-        console.log()
-      }
-      );
-      this.selectedCategories.forEach((category) => {
-        if(item.categoryTag.includes(category) && !this.isItemInArray(item, newView)) newView.push(item);
-      })
-    })
-    if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
-      const baseArraysResult = newView.filter((item) => this.searchBaseDCRange(item, minBaseDC, maxBaseDC));
-      const boostArraysResult = newView.filter((item) => this.searchBoostDCRange(item, minBoostedDC, maxBoostedDC));
-      console.log(boostArraysResult);
-      console.log(baseArraysResult);
-      const mergedArray: CatalogueItem[] = baseArraysResult.concat(boostArraysResult);
-      mergedArray.forEach((item: CatalogueItem, index: number) => {
-        if(mergedArray[index+2]){
-          if(item.name === mergedArray[index+2].name) mergedArray.splice((index+2), 1);
+    } else{
+      testData.forEach((item:CatalogueItem) => {
+        this.selectedEffects.forEach((effect) => {
+          if(item.effectTags.includes(effect) && !this.isItemInArray(item, newView)) newView.push(item);
+          console.log()
         }
+        );
+        this.selectedCategories.forEach((category) => {
+          if(item.categoryTag.includes(category) && !this.isItemInArray(item, newView)) newView.push(item);
+        })
       })
-      console.log(mergedArray);
-      newView = mergedArray;
+  }
+    //Creates and merges arrays based on the entered DC ranges if any are present.
+    if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
+      const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, minBaseDC, maxBaseDC, minBoostedDC, maxBoostedDC); 
+      if(mergedArray !=  null)   newView = mergedArray;
+      else{
+        newView = [];
+      }
     }
     this.currentView = newView;
     return;
