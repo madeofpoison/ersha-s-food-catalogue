@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('./fonts.css');
+@import url('./reset.css');
+html {
+    font-family: 'Bookinsanity';
+    background-color: #ede6cc;
+    font-size: 24px;
+}
+p {
+    font-family: 'Bookinsanity';
+}
+label {
+    font-family: 'Zatanna Misdirection';
+}
+h1{
+    font-family: 'Mr Eaves Small Caps';
+    color: #780b01;
+    font-size: 1.5rem;
+}
+app-catalogue-list{
+    display: flex;
+    float: left;
+    height: 10rem;
+}
+
+/* Ingredient stuff */
+.ingredient-component {
+    display: flex;
+    flex-direction: column;
+
+
+}
+.ingredient-header {
+    font-size:1.25rem;
+    color: #780b01;
+}
+
+
+.ingredient-image-container{
+    max-height: auto;
+    max-width: 50%;
+}
+
+.ingredient-component img{
+    object-fit: contain;
+    width: 80%;
+    height: auto;
+}
+
