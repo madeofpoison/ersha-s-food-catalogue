@@ -23,7 +23,6 @@ export class CatalogueDataService extends difficultyClassSearches {
     return itemFound;
   }
 
-
     
   reconstructCurrentView(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
     let newView: CatalogueItem[] = [];
@@ -44,9 +43,21 @@ export class CatalogueDataService extends difficultyClassSearches {
         })
       })
   }
-    //Creates and merges arrays based on the entered DC ranges if any are present.
+    //Creates and merges arrays based on the entered DC ranges if any are present. This case should only trigger on
+    //a click of the "Add Range" button
     if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
+      
+      if(minBaseDC) this.minBaseDC = minBaseDC ?? 0;
+      if(maxBaseDC) this.maxBaseDC = maxBaseDC ?? 0;
+      if(minBoostedDC) this.minBoostedDC = minBoostedDC ?? 0;
+      if(maxBoostedDC) this.maxBoostedDC = maxBoostedDC ?? 0;
       const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, minBaseDC, maxBaseDC, minBoostedDC, maxBoostedDC); 
+      if(mergedArray !=  null)   newView = mergedArray;
+      else{
+        newView = [];
+      }
+    } else if(this.minBaseDC || this.maxBaseDC || this.minBoostedDC || this.maxBaseDC) {
+      const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, this.minBaseDC, this.maxBaseDC, this.minBoostedDC, this.maxBoostedDC); 
       if(mergedArray !=  null)   newView = mergedArray;
       else{
         newView = [];
@@ -55,7 +66,64 @@ export class CatalogueDataService extends difficultyClassSearches {
     this.currentView = newView;
     return;
   }
+
+
+  //Reconstructs current view using a more exclusive search.
+  reconstructCurrentViewExclusive(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
+    let newView: CatalogueItem[] = [];
+    const itemsByMatchingEffects: string[] = [];
+    const itemsByMatchingCategories: string[] = [];
+    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0) {
+      newView = this.testData;
+    } else{
+      testData.forEach((item:CatalogueItem) => {
+        for(let effect of item.effectTags) {
+          if(this.selectedEffects.includes(effect)) {
+            itemsByMatchingEffects.push(item.name);
+            break;
+          }
+        }
+        if(this.selectedCategories.includes(item.categoryTag)) itemsByMatchingCategories.push(item.name);
+      })
+
+      if(itemsByMatchingCategories.length > 0 && itemsByMatchingEffects.length > 0) {
+        if(itemsByMatchingCategories.length > itemsByMatchingEffects.length) {
+          itemsByMatchingEffects.forEach((item) => {
+            if(itemsByMatchingCategories.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
+          })
+        } else {
+          itemsByMatchingCategories.forEach((item) => {
+            if(itemsByMatchingEffects.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
+          })
+        }
+      }
+
+
+  }
+  if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
+      
+    if(minBaseDC) this.minBaseDC = minBaseDC ?? 0;
+    if(maxBaseDC) this.maxBaseDC = maxBaseDC ?? 0;
+    if(minBoostedDC) this.minBoostedDC = minBoostedDC ?? 0;
+    if(maxBoostedDC) this.maxBoostedDC = maxBoostedDC ?? 0;
+    const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, minBaseDC, maxBaseDC, minBoostedDC, maxBoostedDC); 
+    if(mergedArray !=  null)   newView = mergedArray;
+    else{
+      newView = [];
+    }
+  } else if(this.minBaseDC || this.maxBaseDC || this.minBoostedDC || this.maxBaseDC) {
+    const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, this.minBaseDC, this.maxBaseDC, this.minBoostedDC, this.maxBoostedDC); 
+    if(mergedArray !=  null)   newView = mergedArray;
+    else{
+      newView = [];
+    }
+  }
+  this.currentView = newView;
+  return;
+  }
   constructor() {
     super();
    }
+
+
 }

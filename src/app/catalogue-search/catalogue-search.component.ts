@@ -35,9 +35,9 @@ import { CatalogueDataService } from '../catalogue-data.service';
       <input type="text" [(ngModel)]="searchItem.maxBoostedDC" name="maxBoostedDC" />
       <button (click)="rangeClick()"> Add range </button>
     </label>
-    <button type="submit"> Search </button>
+    <button (click)="isExclusiveSearch = !isExclusiveSearch"> Exclusive search toggle </button>
   </form> 
-  <app-search-suggestions [currentSearch]="searchItem"/>
+  <app-search-suggestions [currentSearch]="searchItem" [isExclusiveSearch]="isExclusiveSearch"/>
   <app-current-parameters />
   `,
   styleUrl: './catalogue-search.component.css'
@@ -45,7 +45,12 @@ import { CatalogueDataService } from '../catalogue-data.service';
 export class CatalogueSearchComponent  {
   @Input() searchItem : SearchItem = new SearchItem();
   catalogueData: CatalogueDataService = inject(CatalogueDataService);
+  isExclusiveSearch: boolean = false;
   rangeClick(): void {
-    this.catalogueData.reconstructCurrentView(this.searchItem.minBaseDC, this.searchItem.maxBaseDC, this.searchItem.minBoostedDC, this.searchItem.maxBoostedDC);
-  }
+    if(this.isExclusiveSearch) {
+      this.catalogueData.reconstructCurrentViewExclusive(this.searchItem.minBaseDC, this.searchItem.maxBaseDC, this.searchItem.minBoostedDC, this.searchItem.maxBoostedDC);
+    } else{
+      this.catalogueData.reconstructCurrentView(this.searchItem.minBaseDC, this.searchItem.maxBaseDC, this.searchItem.minBoostedDC, this.searchItem.maxBoostedDC);
+    }
+}
 }

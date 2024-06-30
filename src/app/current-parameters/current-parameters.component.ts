@@ -28,6 +28,7 @@ export class CurrentParametersComponent {
   onClick(name: string, isCategory: boolean): void {
     if(isCategory) {
       this.catalogueDataService.removeCategory(name);
+      this.catalogueDataService.reconstructCurrentView();
       return;
     } 
     this.catalogueDataService.removeEffect(name);

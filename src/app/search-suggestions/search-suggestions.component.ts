@@ -18,13 +18,19 @@ import { NgFor, NgIf } from '@angular/common';
 })
 export class SearchSuggestionsComponent implements DoCheck {
   @Input() currentSearch!: SearchItem;
+  @Input() isExclusiveSearch!: boolean;
   catalogueDataService: CatalogueDataService = inject(CatalogueDataService);
   suggestedEffects: string[] = this.catalogueDataService.allEffects;
   suggestedCategories: string[] = this.catalogueDataService.allCategories;
   
   onClickEffect(effectName: string): void {
       this.catalogueDataService.addToSelectedEffects(effectName);
-      this.catalogueDataService.reconstructCurrentView();
+      if(!this.isExclusiveSearch) {
+        this.catalogueDataService.reconstructCurrentView();
+      }
+      else{
+        this.catalogueDataService.reconstructCurrentViewExclusive();
+      }
   }
 
   onClickCategory(categoryName: string): void {
