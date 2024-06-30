@@ -3,8 +3,9 @@
   <section>
     <app-catalogue-search />
   </section>
+  <button (click)="isScrollToggled = !isScrollToggled"> Toggle scroll view</button>
   <section>
-    <app-catalogue-list *ngIf="catalogueData.currentView.length > 0; else elseBlock" [currentList]="catalogueData.currentView"/>
+    <app-catalogue-list *ngIf="catalogueData.currentView.length > 0; else elseBlock" [currentList]="catalogueData.currentView" [isScrollView]="isScrollToggled"/>
     <ng-template #elseBlock><h1>NOTHING SATISFIES YOUR SEARCH MORTAL</h1> </ng-template>
   </section>
 </main>

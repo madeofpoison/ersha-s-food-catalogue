@@ -15,6 +15,7 @@ import { NgIf } from '@angular/common';
 })
 export class AppComponent {
   title = 'ersha-food-catalogue';
-  catalogueData : CatalogueDataService = inject(CatalogueDataService);
+  catalogueData : CatalogueDataService = inject(CatalogueDataService);  
+  isScrollToggled: boolean = false;
   
 }

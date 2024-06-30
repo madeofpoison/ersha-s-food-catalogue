@@ -28,8 +28,7 @@ app-catalogue-list{
 .ingredient-component {
     display: flex;
     flex-direction: column;
-
-
+    scroll-snap-align: center;
 }
 .ingredient-header {
     font-size:1.25rem;
@@ -48,3 +47,13 @@ app-catalogue-list{
     height: auto;
 }
 
+/*scroll view*/
+.ingredient-scroll-view {
+    scroll-snap-type: y mandatory;
+    background-color: antiquewhite;
+    overflow: scroll;
+    height: 200rem;
+}
+.ingredient-scroll-view .ingredient-component{
+    scroll-snap-align: start;
+}
