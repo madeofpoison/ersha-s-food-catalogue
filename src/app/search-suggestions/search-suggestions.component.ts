@@ -12,7 +12,8 @@ import { NgFor, NgIf } from '@angular/common';
   <button *ngFor="let effect of suggestedEffects" (click)="onClickEffect(effect)">{{effect}}</button>
   <h2> Categories </h2>
   <button *ngFor="let category of suggestedCategories" (click)="onClickCategory(category)"> {{category}} </button>
-  <h2> {{currentSearch.minBaseDC}} </h2>
+  <h2> Locations </h2>
+  <button *ngFor="let location of suggestedLocations" (click)="onClickLocation(location)"> {{location}} </button>
   `,
   styleUrl: './search-suggestions.component.css'
 })
@@ -22,21 +23,32 @@ export class SearchSuggestionsComponent implements DoCheck {
   catalogueDataService: CatalogueDataService = inject(CatalogueDataService);
   suggestedEffects: string[] = this.catalogueDataService.allEffects;
   suggestedCategories: string[] = this.catalogueDataService.allCategories;
+  suggestedLocations: string[] = this.catalogueDataService.allLocations;
   
+
+  reconstructView() {
+    if(!this.isExclusiveSearch) {
+      this.catalogueDataService.reconstructCurrentView();
+    }
+    else{
+      this.catalogueDataService.reconstructCurrentViewExclusive();
+    }
+  }
   onClickEffect(effectName: string): void {
       this.catalogueDataService.addToSelectedEffects(effectName);
-      if(!this.isExclusiveSearch) {
-        this.catalogueDataService.reconstructCurrentView();
-      }
-      else{
-        this.catalogueDataService.reconstructCurrentViewExclusive();
-      }
+      this.reconstructView();
   }
 
   onClickCategory(categoryName: string): void {
     this.catalogueDataService.addToSelectedCategories(categoryName);
-    this.catalogueDataService.reconstructCurrentView();
+    this.reconstructView();
   }
+  onClickLocation(locationName: string): void {
+    this.catalogueDataService.addToSelectedLocations(locationName);
+    this.reconstructView();
+  }
+
+
   ngDoCheck(): void {
     if(this.currentSearch.currentEffectSearchTerm) this.suggestedEffects =
      this.catalogueDataService.searchForPossibleEffects(this.currentSearch.currentEffectSearchTerm);
@@ -51,7 +63,8 @@ export class SearchSuggestionsComponent implements DoCheck {
 
     if(!this.currentSearch.currentCategorySearchTerm) this.suggestedCategories = this.catalogueDataService.returnAllCategoryTags();
 
-
-   
+    if(this.currentSearch.currentLocationSearchTerm) this.suggestedLocations = 
+    this.catalogueDataService.searchForPossibleLocations(this.currentSearch.currentLocationSearchTerm);
+    else this.suggestedLocations = this.catalogueDataService.returnAllLocations();
   }
 }

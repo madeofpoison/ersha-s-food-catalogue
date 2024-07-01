@@ -17,6 +17,11 @@ import { CatalogueDataService } from '../catalogue-data.service';
     <p>{{category}}</p>
     <button (click)="onClick(category, true)"> X </button>
   </div>
+  <h1>Selected Locations</h1>
+  <div *ngFor="let location of selectedLocationTags">
+    <p>{{location}}</p>
+    <button (click)="onClick(location, true)"> X </button>
+  </div>
   `, 
   styleUrl: './current-parameters.component.css'
 })
@@ -24,6 +29,7 @@ export class CurrentParametersComponent {
   catalogueDataService: CatalogueDataService = inject(CatalogueDataService);
   selectedEffectTags: string[] = this.catalogueDataService.selectedEffects;
   selectedCategoryTags: string[] = this.catalogueDataService.selectedCategories;
+  selectedLocationTags: string[] = this.catalogueDataService.selectedLocations;
   
   onClick(name: string, isCategory: boolean): void {
     if(isCategory) {

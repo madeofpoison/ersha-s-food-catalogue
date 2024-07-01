@@ -1,7 +1,8 @@
+import { LocationSearch } from "./LocationSearch";
 import { CatalogueItem } from "./catalogue-item";
 
-export class categorySearchClass {
-    testData: CatalogueItem[] = []
+export class categorySearchClass extends LocationSearch{
+    override testData: CatalogueItem[] = []
 
     allCategories: string[] = this.returnAllCategoryTags();
     selectedCategories: string[] = [];
@@ -12,8 +13,8 @@ export class categorySearchClass {
           if(!categoryTags.includes(ingredient.categoryTag)) categoryTags.push(ingredient.categoryTag)
         })
         if(this.selectedCategories){
-        const filteredCategoryTags = categoryTags.filter((effect: string) => !this.selectedCategories.includes(effect));
-        return filteredCategoryTags;
+          const filteredCategoryTags = categoryTags.filter((effect: string) => !this.selectedCategories.includes(effect));
+          return filteredCategoryTags;
         }
         return categoryTags;
       }
@@ -39,6 +40,6 @@ export class categorySearchClass {
         return;
       }
       constructor () {
-        
+        super();
       }
 }

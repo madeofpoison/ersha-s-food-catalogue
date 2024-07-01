@@ -29,7 +29,7 @@ export class CatalogueDataService extends difficultyClassSearches {
 
     //Checks whether there are any tag filters present; If there are none, it assigns all items in the catalogue to newView and moves on to filtering by
     //DC ranges.
-    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0) {
+    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0 && this.selectedLocations.length === 0) {
       newView = this.testData;
     } else{
       testData.forEach((item:CatalogueItem) => {
@@ -40,7 +40,10 @@ export class CatalogueDataService extends difficultyClassSearches {
         );
         this.selectedCategories.forEach((category) => {
           if(item.categoryTag.includes(category) && !this.isItemInArray(item, newView)) newView.push(item);
-        })
+        });
+        this.selectedLocations.forEach((location) => {
+          if(item.location === location && !this.isItemInArray(item, newView)) newView.push(item);
+         })
       })
   }
     //Creates and merges arrays based on the entered DC ranges if any are present. This case should only trigger on
@@ -73,7 +76,8 @@ export class CatalogueDataService extends difficultyClassSearches {
     let newView: CatalogueItem[] = [];
     const itemsByMatchingEffects: string[] = [];
     const itemsByMatchingCategories: string[] = [];
-    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0) {
+    const itemsByMatchingLocations: string[] = [];
+    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0 && this.selectedLocations.length === 0) {
       newView = this.testData;
     } else{
       testData.forEach((item:CatalogueItem) => {
@@ -84,9 +88,10 @@ export class CatalogueDataService extends difficultyClassSearches {
           }
         }
         if(this.selectedCategories.includes(item.categoryTag)) itemsByMatchingCategories.push(item.name);
+        if(item.location) if(this.selectedLocations.includes(item.location)) itemsByMatchingLocations.push(item.name);
       })
 
-      if(itemsByMatchingCategories.length > 0 && itemsByMatchingEffects.length > 0) {
+      if(itemsByMatchingCategories.length > 0 && itemsByMatchingEffects.length > 0 ) {
         if(itemsByMatchingCategories.length > itemsByMatchingEffects.length) {
           itemsByMatchingEffects.forEach((item) => {
             if(itemsByMatchingCategories.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
@@ -96,12 +101,26 @@ export class CatalogueDataService extends difficultyClassSearches {
             if(itemsByMatchingEffects.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
           })
         }
+      } else if(itemsByMatchingCategories.length) {
+        itemsByMatchingCategories.forEach((categoryName) => newView.push(this.testData.find((ingredient) => ingredient.name === categoryName)!));
+
+      } else if(itemsByMatchingEffects.length){
+        itemsByMatchingEffects.forEach((categoryName) => newView.push(this.testData.find((ingredient) => ingredient.name === categoryName)!))
       }
+      if(itemsByMatchingLocations.length) {
+        newView = newView.filter((item) => {
+          let isMatchingLocation  = false;
+          this.selectedLocations.forEach((location) => {
 
-
+            if(item.location === location) isMatchingLocation = true;
+            console.log(isMatchingLocation);
+          });
+          return isMatchingLocation;
+      })
+  }
   }
   if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
-      
+
     if(minBaseDC) this.minBaseDC = minBaseDC ?? 0;
     if(maxBaseDC) this.maxBaseDC = maxBaseDC ?? 0;
     if(minBoostedDC) this.minBoostedDC = minBoostedDC ?? 0;
@@ -112,6 +131,7 @@ export class CatalogueDataService extends difficultyClassSearches {
       newView = [];
     }
   } else if(this.minBaseDC || this.maxBaseDC || this.minBoostedDC || this.maxBaseDC) {
+
     const mergedArray: CatalogueItem[] | null = this.searchBoostBase(newView, this.minBaseDC, this.maxBaseDC, this.minBoostedDC, this.maxBoostedDC); 
     if(mergedArray !=  null)   newView = mergedArray;
     else{

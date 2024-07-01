@@ -24,6 +24,10 @@ import { CatalogueDataService } from '../catalogue-data.service';
       <input type="text" [(ngModel)]="searchItem.currentCategorySearchTerm" name="categoriesToSearch"/>
     </label>
     <label>
+      Location
+      <input type="text" [(ngModel)]="searchItem.currentLocationSearchTerm" name="locationsToSearch">
+    </label>
+    <label>
       Base DC:
       <input type="text" [(ngModel)]="searchItem.minBaseDC" name="'minBaseDC"/>
       <input type="text" [(ngModel)]="searchItem.maxBaseDC" name="maxBaseDC" />

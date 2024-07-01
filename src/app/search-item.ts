@@ -4,6 +4,7 @@ export class SearchItem {
     effectsToSearch: string[];
     currentEffectSearchTerm: string| null = null;
     currentCategorySearchTerm: string | null = null;
+    currentLocationSearchTerm: string | null = null;
     effectsTags:string[] = [];
     categoriesTags:string[] = [];
     minBaseDC: number = 0;
