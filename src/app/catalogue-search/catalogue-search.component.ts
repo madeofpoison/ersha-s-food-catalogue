@@ -4,11 +4,12 @@ import { SearchExport, SearchItem } from '../search-item';
 import { CurrentParametersComponent } from '../current-parameters/current-parameters.component';
 import { SearchSuggestionsComponent } from '../search-suggestions/search-suggestions.component';
 import { CatalogueDataService } from '../catalogue-data.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-catalogue-search',
   standalone: true,
-  imports: [FormsModule, CurrentParametersComponent, SearchSuggestionsComponent],
+  imports: [FormsModule, CurrentParametersComponent, SearchSuggestionsComponent, NgIf],
   template:`
   <form #catalogueForm="ngForm" >
     <label>
@@ -27,19 +28,41 @@ import { CatalogueDataService } from '../catalogue-data.service';
       Location
       <input type="text" [(ngModel)]="searchItem.currentLocationSearchTerm" name="locationsToSearch">
     </label>
-    <label>
-      Base DC:
-      <input type="text" [(ngModel)]="searchItem.minBaseDC" name="'minBaseDC"/>
-      <input type="text" [(ngModel)]="searchItem.maxBaseDC" name="maxBaseDC" />
-      <button (click)="rangeClick()" > Add range </button>
-    </label>
-    <label>
-      Boost DC:
-      <input type="text" [(ngModel)]="searchItem.minBoostedDC" name="minBoostedDC" />
-      <input type="text" [(ngModel)]="searchItem.maxBoostedDC" name="maxBoostedDC" />
-      <button (click)="rangeClick()"> Add range </button>
-    </label>
+    <section *ngIf="isExclusiveSearch">
+      <label>
+        Base DC:
+        <input type="text" [(ngModel)]="searchItem.minBaseDC" name="'minBaseDC"/>
+        <input type="text" [(ngModel)]="searchItem.maxBaseDC" name="maxBaseDC" />
+        <button (click)="rangeClick()" > Add range </button>
+      </label>
+      <label>
+        Boost DC:
+        <input type="text" [(ngModel)]="searchItem.minBoostedDC" name="minBoostedDC" />
+        <input type="text" [(ngModel)]="searchItem.maxBoostedDC" name="maxBoostedDC" />
+        <button (click)="rangeClick()"> Add range </button>
+      </label>
+      <label >
+        Max Rarity:
+        <select name="maxRarity" [(ngModel)]="searchItem.maxRarity">
+          <option value="1"> 1 </option>
+          <option value="2"> 2 </option>
+          <option value="3"> 3 </option>
+          <option value="4"> 4 </option>
+        </select>
+      </label>
+      <label>
+        Min Rarity:
+        <select name="maxRarity" [(ngModel)]="searchItem.minRarity">
+          <option value="1"> 1 </option>
+          <option value="2"> 2 </option>
+          <option value="3"> 3 </option>
+          <option value="4"> 4 </option>
+        </select>
+      </label>
+      <button (click)="rarityClick()"> Add rarity range </button>
+    </section>
     <button (click)="isExclusiveSearch = !isExclusiveSearch"> Exclusive search toggle </button>
+
   </form> 
   <app-search-suggestions [currentSearch]="searchItem" [isExclusiveSearch]="isExclusiveSearch"/>
   <app-current-parameters />
@@ -56,5 +79,17 @@ export class CatalogueSearchComponent  {
     } else{
       this.catalogueData.reconstructCurrentView(this.searchItem.minBaseDC, this.searchItem.maxBaseDC, this.searchItem.minBoostedDC, this.searchItem.maxBoostedDC);
     }
-}
+  }
+
+  rarityClick(): void {
+    this.catalogueData.minSearchRarity = this.searchItem.minRarity;
+    this.catalogueData.maxSearchRarity = this.searchItem.maxRarity;
+    if(this.isExclusiveSearch) {
+      this.catalogueData.reconstructCurrentViewExclusive();
+    }
+    else{
+      this.catalogueData.reconstructCurrentView();
+    }
+  }
+
 }

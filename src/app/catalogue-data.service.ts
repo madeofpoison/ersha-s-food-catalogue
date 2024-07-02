@@ -48,6 +48,9 @@ export class CatalogueDataService extends difficultyClassSearches {
   }
     //Creates and merges arrays based on the entered DC ranges if any are present. This case should only trigger on
     //a click of the "Add Range" button
+
+    //Removing this in favour of having two separate searches.
+    /*
     if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
       
       if(minBaseDC) this.minBaseDC = minBaseDC ?? 0;
@@ -66,6 +69,7 @@ export class CatalogueDataService extends difficultyClassSearches {
         newView = [];
       }
     }
+    */
     this.currentView = newView;
     return;
   }
@@ -138,6 +142,8 @@ export class CatalogueDataService extends difficultyClassSearches {
       newView = [];
     }
   }
+  const anotherProvisionalView: CatalogueItem[] | null = this.searchRarityRange(newView);
+  if(anotherProvisionalView !== null) newView = anotherProvisionalView;
   this.currentView = newView;
   return;
   }

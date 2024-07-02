@@ -13,7 +13,8 @@ export const testData: CatalogueItem[] = [
         categoryTag: "Meat",
         effectTags: ["Health"],
         location: "The Cow Farm LMAO",
-        imageUrl: "https://cdn.britannica.com/68/143268-050-917048EA/Beef-loin.jpg"
+        imageUrl: "https://cdn.britannica.com/68/143268-050-917048EA/Beef-loin.jpg",
+        rarity: 1
     },
     {
         name: "Pork",
@@ -28,6 +29,7 @@ export const testData: CatalogueItem[] = [
         effectTags: ["Temporary Health", "RP"],
         location: "Pig farm",
         imageUrl: "https://omnivorescookbook.com/wp-content/uploads/2022/09/220908_Air-Fryer-Char-Siu-Pork_550-500x500.jpg",
+        rarity: 2
     },
     {
         name: "Blue Fish",
@@ -42,6 +44,7 @@ export const testData: CatalogueItem[] = [
         effectTags: ["Sense", "Exploration"],
         location: "The Sea" ,
         imageUrl: "https://www.thesprucepets.com/thmb/Jg5byuBdix-TXtyLk4Xn575K3GE=/6078x0/filters:no_upscale():strip_icc()/low-maintenance-freshwater-fish-4770223-hero-ffb66c229c194e2db4916e88bbd17a15.jpg",
+        rarity: 3
     },
     {
         name: "White Fish",
@@ -56,6 +59,7 @@ export const testData: CatalogueItem[] = [
         effectTags: ["Social", "Skill", "Ability Score", "Charisma", "Health"],
         location: "The Sea",
         imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfHlcmASZgNOAA0mtIwob78oSLwGP1PybjDQ&s",
+        rarity: 3
     },
     {
         name: "Fruit",
@@ -70,6 +74,7 @@ export const testData: CatalogueItem[] = [
         effectTags: ["Personality Affecting", "Social"],
         location: "The Forest",
         imageUrl: "https://hillfresh.eu/wp-content/uploads/2021/12/aardbei-621x420.jpg",
+        rarity: 3
     },
     {
         name: "Mushroom",
@@ -84,5 +89,6 @@ export const testData: CatalogueItem[] = [
         effectTags: ["Spell"],
         location: "Da Cave",
         imageUrl: "https://images.immediate.co.uk/production/volatile/sites/30/2023/08/Chestnut-mushrooms-a223a78.jpg?quality=90&resize=440,400",
+        rarity: 4
     }
 ]

@@ -11,6 +11,8 @@ export class SearchItem {
     maxBaseDC: number = 0;
     minBoostedDC: number = 0;
     maxBoostedDC: number = 0;
+    maxRarity: number = 0;
+    minRarity: number = 0;
 
     constructor() {
         this.nameToSearch = null;

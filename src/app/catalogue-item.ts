@@ -6,6 +6,7 @@ export interface CatalogueItem {
     baseDc: number,
     boostEffectDescription: string,
     boostDc: number,
+    rarity: number,
     marketPrice?: number,
     categoryTag: string,
     effectTags: string[],

@@ -1,5 +1,6 @@
 <main>
-  <p> hello!</p>
+  <button (click)="isModalPresent = true"> click me!</button>
+  <app-ingredient-creation *ngIf="isModalPresent"/>
   <section>
     <app-catalogue-search />
   </section>
