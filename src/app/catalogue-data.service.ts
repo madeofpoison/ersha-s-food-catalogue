@@ -23,7 +23,15 @@ export class CatalogueDataService extends difficultyClassSearches {
     return itemFound;
   }
 
-    
+  resetSearchTerm(): void {
+    this.selectedCategories = [];
+    this.selectedEffects = [];
+    this.selectedLocations = [];
+    this.maxBaseDC = 0;
+    this.minBaseDC = 0;
+    this.minBoostedDC = 0;
+    this.maxBoostedDC = 0;
+  }  
   reconstructCurrentView(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
     let newView: CatalogueItem[] = [];
 

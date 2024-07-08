@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DoCheck, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CatalogueDataService } from '../catalogue-data.service';
 
 @Component({
@@ -8,17 +8,17 @@ import { CatalogueDataService } from '../catalogue-data.service';
   imports: [NgFor],
   template:`
   <h1>Selected Effects</h1>
-  <div *ngFor="let effect of selectedEffectTags">
+  <div *ngFor="let effect of this.catalogueDataService.selectedEffects">
     <p>{{effect}}</p>
     <button (click)="onClick(effect, false)"> X </button>
   </div>
   <h1>Selected Categories</h1>
-  <div *ngFor="let category of selectedCategoryTags">
+  <div *ngFor="let category of catalogueDataService.selectedCategories">
     <p>{{category}}</p>
     <button (click)="onClick(category, true)"> X </button>
   </div>
   <h1>Selected Locations</h1>
-  <div *ngFor="let location of selectedLocationTags">
+  <div *ngFor="let location of this.catalogueDataService.selectedLocations">
     <p>{{location}}</p>
     <button (click)="onClick(location, true)"> X </button>
   </div>
@@ -27,9 +27,8 @@ import { CatalogueDataService } from '../catalogue-data.service';
 })
 export class CurrentParametersComponent {
   catalogueDataService: CatalogueDataService = inject(CatalogueDataService);
-  selectedEffectTags: string[] = this.catalogueDataService.selectedEffects;
-  selectedCategoryTags: string[] = this.catalogueDataService.selectedCategories;
-  selectedLocationTags: string[] = this.catalogueDataService.selectedLocations;
+
+
   
   onClick(name: string, isCategory: boolean): void {
     if(isCategory) {
@@ -41,5 +40,15 @@ export class CurrentParametersComponent {
     this.catalogueDataService.reconstructCurrentView();
     return;
   }
-
+  /*
+  ngDoCheck(): void {
+      if(this.filterReset) {
+        //Please remove later;
+        console.log('i am in great pain.');
+        this.selectedCategoryTags = [];
+        this.selectedEffectTags = [];
+        this.selectedLocationTags = [];
+      }
+  }
+      */
 }

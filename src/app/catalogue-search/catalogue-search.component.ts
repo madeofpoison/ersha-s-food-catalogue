@@ -62,10 +62,11 @@ import { NgIf } from '@angular/common';
       <button (click)="rarityClick()"> Add rarity range </button>
     </section>
     <button (click)="isExclusiveSearch = !isExclusiveSearch"> Exclusive search toggle </button>
-
+    <button (click)="resetFilters() "> Reset Filter  </button>
   </form> 
   <app-search-suggestions [currentSearch]="searchItem" [isExclusiveSearch]="isExclusiveSearch"/>
   <app-current-parameters />
+
   `,
   styleUrl: './catalogue-search.component.css'
 })
@@ -73,6 +74,7 @@ export class CatalogueSearchComponent  {
   @Input() searchItem : SearchItem = new SearchItem();
   catalogueData: CatalogueDataService = inject(CatalogueDataService);
   isExclusiveSearch: boolean = false;
+  
   rangeClick(): void {
     if(this.isExclusiveSearch) {
       this.catalogueData.reconstructCurrentViewExclusive(this.searchItem.minBaseDC, this.searchItem.maxBaseDC, this.searchItem.minBoostedDC, this.searchItem.maxBoostedDC);
@@ -81,6 +83,12 @@ export class CatalogueSearchComponent  {
     }
   }
 
+  //Resets all selected filters and clears search parameters.
+  resetFilters(): void {
+    this.searchItem = new SearchItem();
+    this.catalogueData.resetSearchTerm();
+    this.catalogueData.reconstructCurrentView();
+  }
   rarityClick(): void {
     this.catalogueData.minSearchRarity = this.searchItem.minRarity;
     this.catalogueData.maxSearchRarity = this.searchItem.maxRarity;
@@ -90,6 +98,6 @@ export class CatalogueSearchComponent  {
     else{
       this.catalogueData.reconstructCurrentView();
     }
-  }
+  } 
 
 }
