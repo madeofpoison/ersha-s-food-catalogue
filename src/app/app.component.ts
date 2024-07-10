@@ -6,6 +6,7 @@ import { CatalogueDataService } from './catalogue-data.service';
 import { CatalogueItem } from './catalogue-item';
 import { NgIf } from '@angular/common';
 import { IngredientCreationComponent } from './ingredient-creation/ingredient-creation.component';
+import { GoogelServiceeService } from './googel-servicee.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ import { IngredientCreationComponent } from './ingredient-creation/ingredient-cr
 export class AppComponent {
   title = 'ersha-food-catalogue';
   catalogueData : CatalogueDataService = inject(CatalogueDataService);  
+  googleAuth: GoogelServiceeService  = inject(GoogelServiceeService);
   isScrollToggled: boolean = false;
   isModalPresent: boolean = false;
+  accessToken: string | null = this.googleAuth.getAccessToken();
 }

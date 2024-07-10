@@ -1,5 +1,7 @@
 <main>
-  <button (click)="isModalPresent = true"> click me!</button>
+  
+  <button *ngIf="!accessToken; else elseBlock"> <a [href]="googleAuth.createFinalUrl()">auth test</a></button>
+  <ng-template #elseBlock><button (click)="isModalPresent = true"> click me!</button></ng-template>
   <app-ingredient-creation *ngIf="isModalPresent" [(isSubmitted)]="isModalPresent"/>
   <section>
     <app-catalogue-search />
