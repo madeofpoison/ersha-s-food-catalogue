@@ -22,4 +22,5 @@ export class AppComponent {
   isScrollToggled: boolean = false;
   isModalPresent: boolean = false;
   accessToken: string | null = this.googleAuth.getAccessToken();
+  userEmail?: Promise<string> = this.googleAuth.getUserEmail(this.accessToken!);
 }
