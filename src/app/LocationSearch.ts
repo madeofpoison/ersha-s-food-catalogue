@@ -2,7 +2,7 @@ import { CatalogueItem } from "./catalogue-item";
 import { RaritySearch } from "./raritySearch";
 
 export class LocationSearch extends RaritySearch {
-    override testData: CatalogueItem[] = [];
+
     allLocations: string[] = this.returnAllLocations();
     selectedLocations: string[] = [];
 

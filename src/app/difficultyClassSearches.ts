@@ -4,7 +4,7 @@ import { effectSearchClass } from "./effectSearchClass";
 
 export class difficultyClassSearches extends effectSearchClass {
     //To be overriden by superclass
-     override testData: CatalogueItem[]; 
+
      minBaseDC?: number;
      maxBaseDC?: number;
      minBoostedDC?: number;

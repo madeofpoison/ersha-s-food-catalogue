@@ -2,7 +2,7 @@ import { LocationSearch } from "./LocationSearch";
 import { CatalogueItem } from "./catalogue-item";
 
 export class categorySearchClass extends LocationSearch{
-    override testData: CatalogueItem[] = []
+
 
     allCategories: string[] = this.returnAllCategoryTags();
     selectedCategories: string[] = [];

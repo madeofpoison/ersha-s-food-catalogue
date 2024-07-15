@@ -23,7 +23,7 @@ app-catalogue-list{
     float: left;
     height: 10rem;
 }
-/* Search input */
+/**/
 #suggested-effects {
     display: grid;
     justify-content: center;
@@ -45,11 +45,55 @@ app-catalogue-list{
 #suggested-effects .search-button-box {
     display: flex;
     grid-area: bottom;
-    overflow-x: scroll;
+    overflow-x: hidden;
     justify-content: space-around;
     gap: 2rem;
 }
-
+#suggested-categories  {
+    display: grid;
+    justify-content: center;
+    grid-template-areas: 
+    "top"
+    "bottom";
+    grid-template-columns: 100%;
+    grid-template-rows : 50% 50%;
+    height: 3rem;
+    width: 100%;
+}
+#suggested-categories .search-button-box {
+    grid-area: top;
+}
+#suggested-categories .search-button-box {
+    display: flex;
+    grid-area: bottom;
+    overflow-x: hidden;
+    justify-content: space-around;
+    gap: 2rem;
+}
+#suggested-categories h2{
+    text-align: center;
+}
+#suggested-locations  {
+    display: grid;
+    justify-content: center;
+    grid-template-areas: 
+    "top"
+    "bottom";
+    grid-template-columns: 100%;
+    grid-template-rows : 50% 50%;
+    height: 3rem;
+    width: 100%;
+}
+#suggested-locations h2 {
+    text-align: center;
+}
+#suggested-locations .search-button-box {
+    display: flex;
+    grid-area: bottom;
+    overflow-x: hidden;
+    justify-content: space-around;
+    gap: 2rem;
+}
 .search-button-box button {
     background-color: #780b01;
     color: #F5F2D0;
@@ -60,7 +104,7 @@ app-catalogue-list{
     box-shadow: 0px 7px 7px 0px rgb(0,0,0);
 }
 app-search-suggestions h2 {
-    font-family: 'Scaly Sans';
+    font-family: 'Mr Eaves Small Caps';
 }
 /* Ingredient stuff */
 .ingredient-component {
@@ -92,6 +136,8 @@ app-search-suggestions h2 {
     overflow: scroll;
     height: 200rem;
 }
+
+
 .ingredient-scroll-view .ingredient-component{
     scroll-snap-align: start;
 }

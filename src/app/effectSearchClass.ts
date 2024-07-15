@@ -2,7 +2,7 @@ import { CatalogueItem } from "./catalogue-item";
 import { categorySearchClass } from "./categorySearchClass";
 
 export class effectSearchClass extends categorySearchClass {
-    override testData: CatalogueItem[] =[]
+
     allEffects: string[] = this.returnAllEffectTags();
     selectedEffects: string[] = [];
 
@@ -22,6 +22,8 @@ export class effectSearchClass extends categorySearchClass {
       searchForPossibleEffects(searchTerm: string | null): string[] {
         if(!searchTerm) return this.allEffects;
         const possibleEffects:string[] = this.allEffects.filter((effect) => effect.toLowerCase().includes(searchTerm.toLowerCase()) && !this.selectedEffects.includes(effect));
+        console.log(possibleEffects);
+        console.log(this.allEffects);
         return possibleEffects;
       }
       addToSelectedEffects(effectName:string): void {

@@ -1,7 +1,8 @@
 import { CatalogueItem } from "./catalogue-item";
+import { testData } from "./testStuff";
 
 export class RaritySearch {
-    testData: CatalogueItem[] = [];
+    testData: CatalogueItem[] =testData;
     minSearchRarity?: number;
     maxSearchRarity?: number;
 
