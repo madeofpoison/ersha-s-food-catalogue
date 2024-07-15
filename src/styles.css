@@ -23,7 +23,40 @@ app-catalogue-list{
     float: left;
     height: 10rem;
 }
+/* Search input */
+#suggested-effects {
+    display: grid;
+    justify-content: center;
+    grid-template-areas: 
+    "top"
+    "bottom";
+    grid-template-columns: 100%;
+    grid-template-rows : 50% 50%;
+    height: 3rem;
+    width: 100%;
+}
+#suggested-effects h2 {
+    display: flex;
+    justify-content: center;
+    min-width: 100%;
+    margin-inline: auto;
+    grid-area: top;
+}
+#suggested-effects .search-button-box {
+    display: flex;
+    grid-area: bottom;
+    overflow-x: scroll;
+    justify-content: space-around;
+    gap: 2rem;
+}
 
+.search-button-box button {
+    background-color: #780b01;
+    color: #F5F2D0;
+    border-radius: 8px;
+    min-width: 5%;
+    max-width: 10%;
+}
 /* Ingredient stuff */
 .ingredient-component {
     display: flex;
@@ -66,9 +99,9 @@ app-ingredient-creation {
         top: 0;
         width: 100%; /* Full width */
         height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
+        overflow: auto; 
         background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+        background-color: rgba(0,0,0,0.6); 
       
 }
 .ingredient-creation-form {

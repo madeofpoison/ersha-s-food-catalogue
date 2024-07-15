@@ -8,12 +8,24 @@ import { NgFor, NgIf } from '@angular/common';
   standalone: true,
   imports: [NgFor, NgIf],
   template:`
-  <h2> Effects </h2>
-  <button *ngFor="let effect of suggestedEffects" (click)="onClickEffect(effect)">{{effect}}</button>
-  <h2> Categories </h2>
-  <button *ngFor="let category of suggestedCategories" (click)="onClickCategory(category)"> {{category}} </button>
-  <h2> Locations </h2>
-  <button *ngFor="let location of suggestedLocations" (click)="onClickLocation(location)"> {{location}} </button>
+  <div id="suggested-effects">
+    <h2> Effects </h2>
+    <div class="search-button-box">
+      <button *ngFor="let effect of suggestedEffects" (click)="onClickEffect(effect)">{{effect}}</button>
+    </div>
+  </div>
+  <div id="suggested-categories">
+    <h2> Categories </h2>
+    <div id="search-button-box"> 
+      <button *ngFor="let category of suggestedCategories" (click)="onClickCategory(category)"> {{category}} </button>
+    </div>
+  </div>
+  <div id="suggested-locations">
+    <h2> Locations </h2>
+    <div id="search-button-box">
+      <button *ngFor="let location of suggestedLocations" (click)="onClickLocation(location)"> {{location}} </button>
+    </div>
+  </div>
   `,
   styleUrl: './search-suggestions.component.css'
 })
