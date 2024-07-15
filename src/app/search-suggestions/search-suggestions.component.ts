@@ -16,13 +16,13 @@ import { NgFor, NgIf } from '@angular/common';
   </div>
   <div id="suggested-categories">
     <h2> Categories </h2>
-    <div id="search-button-box"> 
+    <div class="search-button-box"> 
       <button *ngFor="let category of suggestedCategories" (click)="onClickCategory(category)"> {{category}} </button>
     </div>
   </div>
   <div id="suggested-locations">
     <h2> Locations </h2>
-    <div id="search-button-box">
+    <div class="search-button-box">
       <button *ngFor="let location of suggestedLocations" (click)="onClickLocation(location)"> {{location}} </button>
     </div>
   </div>
