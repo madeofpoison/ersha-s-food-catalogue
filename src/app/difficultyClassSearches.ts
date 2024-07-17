@@ -3,7 +3,7 @@ import { CatalogueItem } from "./catalogue-item";
 import { effectSearchClass } from "./effectSearchClass";
 
 export class difficultyClassSearches extends effectSearchClass {
-    //To be overriden by superclass
+
 
      minBaseDC?: number;
      maxBaseDC?: number;

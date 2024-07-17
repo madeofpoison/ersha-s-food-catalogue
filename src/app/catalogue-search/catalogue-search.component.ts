@@ -28,7 +28,7 @@ import { NgIf } from '@angular/common';
       Location
       <input type="text" [(ngModel)]="searchItem.currentLocationSearchTerm" name="locationsToSearch">
     </label>
-    <section *ngIf="isExclusiveSearch">
+    <section id="exclusive-search-items" *ngIf="isExclusiveSearch">
       <label>
         Base DC:
         <input type="text" [(ngModel)]="searchItem.minBaseDC" name="'minBaseDC"/>

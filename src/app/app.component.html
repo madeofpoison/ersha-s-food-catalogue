@@ -4,7 +4,7 @@
   <ng-template #elseBlock><button (click)="isModalPresent = true"> click me!</button></ng-template>
   <p *ngIf="accessToken">{{userEmail}}</p>
   <app-ingredient-creation *ngIf="isModalPresent" [(isSubmitted)]="isModalPresent"/>
-  <section>
+  <section id="catalogue-search">
     <app-catalogue-search />
   </section>
   <button (click)="isScrollToggled = !isScrollToggled"> Toggle scroll view</button>
