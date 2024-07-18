@@ -4,8 +4,22 @@
 @import url('./reset.css');
 html {
     font-family: 'Bookinsanity';
-    background-color: #ede6cc;
+    background-image: url("./assets/wooden-floor-background.jpg");
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center;
     font-size: 24px;
+    scroll-snap-type: y proximity;
+
+}
+button {
+    background-color: #780b01;
+    color: #F5F2D0;
+    border-radius: 8px;
+    min-width: 5%;
+    max-width: 10%;
+    font-family: 'Nodesto Caps Condensed';
+    box-shadow: 0px 7px 7px 0px rgb(0,0,0);
 }
 p {
     font-family: 'Bookinsanity';
@@ -23,6 +37,23 @@ app-catalogue-list{
     float: left;
     height: 10rem;
 }
+/* Google auth button styles */
+#auth-button {
+    background-color: #780b01;
+    color: #F5F2D0;
+    border-radius: 8px;
+    font-family: 'Nodesto Caps Condensed';
+    box-shadow: 0px 7px 7px 0px rgb(0,0,0);
+    position: relative;
+    left: 90%;
+    height: 1.625rem;
+    width: 6rem;
+}
+#auth-button a {
+    color: #c0ad6a;
+    font-size: 1rem;
+    font-family: 'Mr Eaves Small Caps';
+}
 /* search form styles */
 form {
     display: flex;
@@ -31,7 +62,7 @@ form {
     justify-content: space-evenly;
     align-items: center;
     height: 12rem;
-    border-bottom: 3px solid #c0ad6a;
+    border-bottom: 4px solid #c0ad6a;
     padding-bottom: 1rem;
 }
 form input {
@@ -146,39 +177,103 @@ app-search-suggestions h2 {
     padding-bottom: 2rem;
 }
 /* Ingredient stuff */
-.ingredient-component {
+/*To do with when we're doing the page turn-y stuff */
+
+.non-scroll-view {
     display: flex;
-    flex-direction: column;
-    scroll-snap-align: center;
+    align-items: baseline;
+    justify-content: space-around;
 }
+.non-scroll-view button {
+    align-self: center;
+}
+.ingredient-component {
+    display: grid;
+    grid-template-areas:
+    "title title . ."
+    "type type . ."
+    "image image fluff fluff"
+    "image image fluff fluff"
+    "image image base-effect base-effect"
+    "image image base-effect base-effect"
+    "image image base-dc base-dc"
+    "image image boost-effect boost-effect"
+    "image image boost-effect boost-effect"
+    "image image boost-dc boost-dc"
+    "image image location location"
+    "tags tags price price";
+    scroll-snap-align: center;
+    height: auto;
+    padding: 2rem;
+}
+.ingredient-component h1 {
+    font-size: 1.675rem;
+}
+.ingredient-component h3{
+    font-family: 'Mr Eaves Small Caps';
+    font-size: 1.25rem;
+    color:#780b01;
+}
+.ingredient-component .description-container {
+    grid-area: fluff;
+}
+.ingredient-component .base-effect-container {
+    grid-area: base-effect;
+}
+.ingredient-component .base-dc-container {
+    grid-area: base-dc;
+}
+.ingredient-component .boost-effect-container {
+    grid-area: boost-effect;
+}
+.ingredient-component .boost-dc-container {
+    grid-area: boost-dc;
+}
+.ingredient-component .title {
+    grid-area: title;
+}
+.ingredient-component .price-container {
+    grid-area: price;
+}
+.ingredient-component .tags-container {
+    grid-area: tags;
+}
+.ingredient-component .location {
+    grid-area: location;
+}
+.ingredient-component .type-container{
+    grid-area: type;
+}
+
 .ingredient-header {
-    font-size:1.25rem;
+    font-size: 1.125rem;
     color: #780b01;
 }
+    
 
 
 .ingredient-image-container{
     max-height: auto;
-    max-width: 50%;
+    max-width: 100%;
+    grid-area: image;
 }
 
 .ingredient-component img{
     object-fit: contain;
-    width: 80%;
+    width: 95%;
     height: auto;
+    margin: 0px;
 }
 
 /*scroll view*/
-.ingredient-scroll-view {
-    scroll-snap-type: y mandatory;
-    background-color: antiquewhite;
-    overflow: scroll;
-    height: 200rem;
+#ingredient-scroll-view {
+    height: auto;
 }
 
 
-.ingredient-scroll-view .ingredient-component{
-    scroll-snap-align: start;
+#ingredient-scroll-view .ingredient-component{
+    scroll-snap-align: center;
+    border-bottom: 0.275rem solid #c0ad6a;
 }
 
 /* Ingredient creation modal*/

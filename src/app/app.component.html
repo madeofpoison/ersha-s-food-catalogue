@@ -1,6 +1,5 @@
 <main>
-  
-  <button *ngIf="!accessToken; else elseBlock"> <a [href]="googleAuth.createFinalUrl()">auth test</a></button>
+  <button id="auth-button" *ngIf="!accessToken; else elseBlock"> <a [href]="googleAuth.createFinalUrl()">auth test</a></button>
   <ng-template #elseBlock><button (click)="isModalPresent = true"> click me!</button></ng-template>
   <p *ngIf="accessToken">{{userEmail}}</p>
   <app-ingredient-creation *ngIf="isModalPresent" [(isSubmitted)]="isModalPresent"/>
