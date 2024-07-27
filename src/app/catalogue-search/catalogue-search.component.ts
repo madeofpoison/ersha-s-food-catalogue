@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, DoCheck, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SearchExport, SearchItem } from '../search-item';
 import { CurrentParametersComponent } from '../current-parameters/current-parameters.component';
@@ -70,7 +70,7 @@ import { NgIf } from '@angular/common';
   `,
   styleUrl: './catalogue-search.component.css'
 })
-export class CatalogueSearchComponent  {
+export class CatalogueSearchComponent  implements DoCheck{
   @Input() searchItem : SearchItem = new SearchItem();
   catalogueData: CatalogueDataService = inject(CatalogueDataService);
   isExclusiveSearch: boolean = false;
@@ -99,5 +99,10 @@ export class CatalogueSearchComponent  {
       this.catalogueData.reconstructCurrentView();
     }
   } 
-
+  ngDoCheck(): void {
+      if(this.searchItem.nameToSearch) {
+        console.log(this.searchItem.nameToSearch);
+        this.catalogueData.nameToSearch = this.searchItem.nameToSearch;
+      }
+  }
 }

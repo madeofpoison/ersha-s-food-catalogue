@@ -1,8 +1,9 @@
 import { CatalogueItem } from "./catalogue-item";
+import { NameSearch } from "./name-search";
 import { testData } from "./testStuff";
 
-export class RaritySearch {
-    testData: CatalogueItem[] =testData;
+export class RaritySearch extends NameSearch {
+
     minSearchRarity?: number;
     maxSearchRarity?: number;
 

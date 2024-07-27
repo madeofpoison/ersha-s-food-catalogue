@@ -32,18 +32,19 @@ export class CatalogueDataService extends difficultyClassSearches {
     this.minBoostedDC = 0;
     this.maxBoostedDC = 0;
   }  
+
+  //Reconstructs the list of items displayed  to the user based on the variety of parameters entered in the ngForm
   reconstructCurrentView(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
     let newView: CatalogueItem[] = [];
 
     //Checks whether there are any tag filters present; If there are none, it assigns all items in the catalogue to newView and moves on to filtering by
     //DC ranges.
-    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0 && this.selectedLocations.length === 0) {
+    if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0 && this.selectedLocations.length === 0 && !this.nameToSearch) {
       newView = this.testData;
     } else{
       testData.forEach((item:CatalogueItem) => {
         this.selectedEffects.forEach((effect) => {
           if(item.effectTags.includes(effect) && !this.isItemInArray(item, newView)) newView.push(item);
-          console.log()
         }
         );
         this.selectedCategories.forEach((category) => {
@@ -51,7 +52,8 @@ export class CatalogueDataService extends difficultyClassSearches {
         });
         this.selectedLocations.forEach((location) => {
           if(item.location === location && !this.isItemInArray(item, newView)) newView.push(item);
-         })
+         });
+        this.filterByNameNotStrict(item, newView);
       })
   }
     //Creates and merges arrays based on the entered DC ranges if any are present. This case should only trigger on
@@ -78,6 +80,7 @@ export class CatalogueDataService extends difficultyClassSearches {
       }
     }
     */
+   
     this.currentView = newView;
     return;
   }
@@ -85,25 +88,39 @@ export class CatalogueDataService extends difficultyClassSearches {
 
   //Reconstructs current view using a more exclusive search.
   reconstructCurrentViewExclusive(minBaseDC?: number, maxBaseDC?: number, minBoostedDC?: number, maxBoostedDC?: number): void {
+    //Item to continuously sieve and filter throughout process.
     let newView: CatalogueItem[] = [];
+
+    //Arrays meant to hold possible values to evaluate before pushing into the newView.
     const itemsByMatchingEffects: string[] = [];
     const itemsByMatchingCategories: string[] = [];
     const itemsByMatchingLocations: string[] = [];
+
+    //Pushes everything if the tags are empty.
     if(this.selectedCategories.length === 0 && this.selectedEffects.length === 0 && this.selectedLocations.length === 0) {
       newView = this.testData;
     } else{
       testData.forEach((item:CatalogueItem) => {
+
+        //Find whether the item includes any effects included in the item tag array
         for(let effect of item.effectTags) {
           if(this.selectedEffects.includes(effect)) {
             itemsByMatchingEffects.push(item.name);
             break;
           }
         }
+        //Check for categories and location.
         if(this.selectedCategories.includes(item.categoryTag)) itemsByMatchingCategories.push(item.name);
         if(item.location) if(this.selectedLocations.includes(item.location)) itemsByMatchingLocations.push(item.name);
       })
 
+      //what is this disaster
+      //Now filters based on which items found fulfill ALL requirements.
+      //Performs filters differently based on which arrays are empty
+      //Both arrays are not empty.
       if(itemsByMatchingCategories.length > 0 && itemsByMatchingEffects.length > 0 ) {
+
+        //Iterating through the longer array
         if(itemsByMatchingCategories.length > itemsByMatchingEffects.length) {
           itemsByMatchingEffects.forEach((item) => {
             if(itemsByMatchingCategories.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
@@ -113,12 +130,19 @@ export class CatalogueDataService extends difficultyClassSearches {
             if(itemsByMatchingEffects.includes(item)) newView.push(this.testData.find((ingredient) => ingredient.name === item)!)
           })
         }
+
+      //If effects are empty.  
       } else if(itemsByMatchingCategories.length) {
         itemsByMatchingCategories.forEach((categoryName) => newView.push(this.testData.find((ingredient) => ingredient.name === categoryName)!));
-
+      
+      //If categories are empty.
       } else if(itemsByMatchingEffects.length){
         itemsByMatchingEffects.forEach((categoryName) => newView.push(this.testData.find((ingredient) => ingredient.name === categoryName)!))
       }
+
+      //Locations search was added later, and got its own, independent check outside of that mess. Really, this is how 
+      //the whole thing should be done. Maybe change later?
+
       if(itemsByMatchingLocations.length) {
         newView = newView.filter((item) => {
           let isMatchingLocation  = false;
@@ -129,6 +153,9 @@ export class CatalogueDataService extends difficultyClassSearches {
           });
           return isMatchingLocation;
       })
+  }
+  if(this.nameToSearch) {
+    newView = this.filterByName(newView);
   }
   }
   if(minBaseDC || maxBaseDC||  minBoostedDC || maxBaseDC) {
